@@ -3,6 +3,7 @@ import sys
 from google import genai
 
 def audit_config(config_text):
+    # Automatically loads GEMINI_API_KEY from environment variables
     client = genai.Client()
     
     prompt = f"""
@@ -13,7 +14,7 @@ def audit_config(config_text):
     
     print("[*] Analyzing configuration with Gemma 4...")
     response = client.models.generate_content(
-        model='gemma-4-31b',
+        model='gemma-4-31b-it',
         contents=prompt,
     )
     return response.text
@@ -37,7 +38,7 @@ if __name__ == "__main__":
     end
     """
     
-    # You can pass a file path as an argument, or use the sample
+    # Check if a config file path was passed as an argument
     if len(sys.argv) > 1:
         file_path = sys.argv[1]
         if os.path.exists(file_path):
